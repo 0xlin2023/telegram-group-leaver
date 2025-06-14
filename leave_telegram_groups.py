@@ -26,7 +26,22 @@ except Exception as e:
 
 async def main():
     async with TelegramClient('leave_telegram_session', api_id, api_hash) as client:
+        print("正在获取对话列表...")
         dialogs = await client.get_dialogs()
+        
+        # 自动清理 "Deleted Account"
+        deleted_count = 0
+        for d in dialogs:
+            if getattr(d.entity, 'deleted', False):
+                print(f"检测到已注销账号，正在清理: {d.name} ...")
+                await client.delete_dialog(d.id)
+                deleted_count += 1
+        
+        if deleted_count > 0:
+            print(f"\n已自动清理 {deleted_count} 个'已注销账号'的对话。\n")
+            print("重新获取对话列表...")
+            dialogs = await client.get_dialogs()
+
         groups = [d for d in dialogs if isinstance(d.entity, (Channel, Chat))]
         
         if not groups:
