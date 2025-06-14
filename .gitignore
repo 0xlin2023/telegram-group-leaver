@@ -1,0 +1,30 @@
+# 默认的 Python .gitignore 文件
+# 详细信息: https://github.com/github/gitignore/blob/main/Python.gitignore
+
+# Telethon 会话文件，包含敏感登录信息，绝不能上传！
+*.session
+*.session-journal
+
+# 配置文件，包含个人 API 信息，绝不能上传！
+config.json
+
+# 字节码和缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+/venv/
+/env/
+/.venv/
+/.env/
+/virtualenv/
+/venv.*
+/.venv.*
+
+# 其他
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn 
